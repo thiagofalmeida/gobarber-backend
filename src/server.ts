@@ -1,11 +1,11 @@
-import express, { response } from 'express';
+import express from 'express';
 
 const app = express();
 
-app.get('/', (request, response) => {
-    return response.json({ message: 'Nada nos puede parar!'});
-});
+app.get('/', (request, response) =>
+  response.json({ message: 'Nada nos puede parar!' }),
+);
 
-app.listen(3333, () =>{
-    console.log('Server Started!');
+app.listen(3333, () => {
+  console.log('Server Started!');
 });
