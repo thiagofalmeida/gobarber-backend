@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
-import UserMap from '@modules/users/dtos/UserMap';
+import UserMap from '@modules/users/mappers/UserMap';
 
 export default class SessionsController {
   public async create(request: Request, response: Response): Promise<Response> {
