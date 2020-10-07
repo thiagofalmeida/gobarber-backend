@@ -18,7 +18,7 @@ dotenv.config();
 
 app.use(cors());
 app.use(express.json());
-app.use('/files', express.static(uploadConfig.directory));
+app.use('/files', express.static(uploadConfig.tmpFolder));
 app.use(routes);
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
