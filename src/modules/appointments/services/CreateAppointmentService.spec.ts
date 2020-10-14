@@ -1,17 +1,20 @@
 import 'reflect-metadata';
 
 import AppError from '@shared/errors/AppError';
-import FakeAppointmentRepository from '../repositories/fakes/FakeAppointmentsRepository';
+
+import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import CreateAppointmentService from './CreateAppointmentService';
 
-let fakeAppointmentRepository: FakeAppointmentRepository;
+let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let createAppointment: CreateAppointmentService;
 
 describe('CreateAppointment', () => {
   beforeEach(() => {
-    fakeAppointmentRepository = new FakeAppointmentRepository();
+    fakeAppointmentsRepository = new FakeAppointmentsRepository();
 
-    createAppointment = new CreateAppointmentService(fakeAppointmentRepository);
+    createAppointment = new CreateAppointmentService(
+      fakeAppointmentsRepository,
+    );
   });
 
   it('should be able to create a new appointment', async () => {
@@ -21,11 +24,12 @@ describe('CreateAppointment', () => {
 
     const appointment = await createAppointment.execute({
       date: new Date(2020, 4, 10, 13),
-      user_id: 'user',
-      provider_id: 'provider',
+      user_id: 'user-id',
+      provider_id: 'provider-id',
     });
 
     expect(appointment).toHaveProperty('id');
+    expect(appointment.provider_id).toBe('provider-id');
   });
 
   it('should not be able to create two appointments on the same time', async () => {
@@ -60,6 +64,20 @@ describe('CreateAppointment', () => {
         date: new Date(2020, 4, 10, 11),
         user_id: 'user-id',
         provider_id: 'provider-id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to create an appointment with same user as provider', async () => {
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return new Date(2020, 4, 10, 12).getTime();
+    });
+
+    await expect(
+      createAppointment.execute({
+        date: new Date(2020, 4, 10, 13),
+        user_id: 'user-id',
+        provider_id: 'user-id',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
