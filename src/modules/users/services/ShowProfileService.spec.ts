@@ -7,7 +7,7 @@ import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 let fakeUserRepository: FakeUsersRepository;
 let showProfileService: ShowProfileService;
 
-describe('UpdateProfile', () => {
+describe('ShowProfile', () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUsersRepository();
 
