@@ -18,5 +18,7 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": ["node_modules", "lib", "tests", "coverage"],
+  "include": ["src"]
 }
