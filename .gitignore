@@ -118,3 +118,6 @@ dist
 #temp folders and files
 tmp/*
 !tmp/.gitkeep
+
+#arquivo de configuração de banco de dados
+ormconfig.json
